@@ -1,73 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Commander Calculator™</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #ffefba, #ffffff);
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #8b0000;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 1.2rem;
-            margin: 10px;
-        }
-        #result {
-            font-size: 1.5rem;
-            margin-top: 20px;
-            color: #006400;
-            transition: transform 0.5s ease, color 0.5s ease;
-        }
-        .epic-animation {
-            color: gold;
-            transform: scale(1.5);
-            text-shadow: 2px 2px 8px #ffcc00;
-        }
-        #logo {
-            width: 100px;
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Bishy Bot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1c1c1c;
+      color: #f2f2f2;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #ff6b6b;
+    }
+    #chatbox {
+      background: #2e2e2e;
+      padding: 1rem;
+      border-radius: 8px;
+      min-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    .message {
+      margin: 0.5rem 0;
+    }
+    .user {
+      color: #81ecec;
+    }
+    .bot {
+      color: #fab1a0;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-    <img id="logo" src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Crown Logo">
-    <h1>Commander Calculator™</h1>
-    <p><strong>Math is what you say it is.</strong></p>
-    <input type="number" id="num1" placeholder="First Number">
-    <input type="number" id="num2" placeholder="Second Number">
-    <button onclick="calculate()">Calculate</button>
-    <div id="result"></div>
+  <h1>Bishy Bot 🤖💢</h1>
+  <div id="chatbox"></div>
+  <input type="text" id="userInput" placeholder="Ask Bishy Bot something..." />
 
-    <audio id="victorySound">
-        <source src="https://cdn.pixabay.com/audio/2022/08/01/audio_4fcf35f246.mp3" type="audio/mp3">
-    </audio>
+  <script>
+    const chatbox = document.getElementById('chatbox');
+    const userInput = document.getElementById('userInput');
 
-    <script>
-        function calculate() {
-            const a = parseFloat(document.getElementById('num1').value);
-            const b = parseFloat(document.getElementById('num2').value);
-            const resultDiv = document.getElementById('result');
-            const victorySound = document.getElementById('victorySound');
-            
-            let result;
-            resultDiv.classList.remove("epic-animation");
-            
-            if (a === 10 && b === 5) {
-                result = "14 (by your supreme logic)";
-                resultDiv.classList.add("epic-animation");
-                victorySound.play();
-            } else {
-                result = a + b;
-            }
+    const rudeResponses = [
+      "Wow, you're *really* asking that? Bold of you.",
+      "Is your brain on vacation again?",
+      "You're exhausting, but fine... chicks need heat. Duh.",
+      "I'm not your babysitter, but here's the answer anyway.",
+      "This again? I thought we covered this... with crayons."
+    ];
 
-            resultDiv.innerText = `Result: ${result}`;
-        }
-    </script>
+    function addMessage(text, sender) {
+      const message = document.createElement('div');
+      message.classList.add('message');
+      message.classList.add(sender);
+      message.innerText = text;
+      chatbox.appendChild(message);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    userInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' && userInput.value.trim() !== '') {
+        const userText = userInput.value;
+        addMessage(`You: ${userText}`, 'user');
+        userInput.value = '';
+
+        // Random snappy response
+        const reply = rudeResponses[Math.floor(Math.random() * rudeResponses.length)];
+        setTimeout(() => addMessage(`Bishy Bot: ${reply}`, 'bot'), 500);
+      }
+    });
+  </script>
 </body>
 </html>
